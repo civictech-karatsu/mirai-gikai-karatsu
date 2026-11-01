@@ -11,7 +11,7 @@ function getStanceBadgeStyle(type: StanceTypeEnum) {
     case "conditional_for":
       return {
         bg: "bg-[#ECFCF1]",
-        textColor: "text-[#0F8472]",
+        textColor: "text-primary-accent",
       };
     case "against":
     case "conditional_against":

@@ -22,6 +22,7 @@ export function Footer() {
         {siteConfig.features.showTeamMiraiSection && <FooterLogoSection />}
         <FooterPrimaryLinks />
         <FooterPolicies />
+        <FooterForkNotice />
         {siteConfig.features.showTeamMiraiSection && <FooterCopyright />}
       </div>
     </footer>
@@ -91,6 +92,51 @@ function FooterPolicies() {
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+/**
+ * fork 版としての免責文言とソースコード公開先（FORK_GUIDELINES.md の必須要件）
+ */
+function FooterForkNotice() {
+  const { sourceCode, upstreamSite, upstreamRepo } = siteConfig.externalLinks;
+  const linkClassName =
+    "underline underline-offset-2 transition-colors hover:text-slate-900";
+
+  return (
+    <div className="flex flex-col items-center gap-1 text-[12px] text-slate-700 mb-5">
+      <p>これは政党チームみらいが運営しているものではありません</p>
+      <p>
+        <a
+          href={upstreamSite}
+          target="_blank"
+          rel="noreferrer"
+          className={linkClassName}
+        >
+          みらい議会
+        </a>
+        （
+        <a
+          href={upstreamRepo}
+          target="_blank"
+          rel="noreferrer"
+          className={linkClassName}
+        >
+          team-mirai/mirai-gikai
+        </a>
+        ）をもとに{siteConfig.operator.name}が改変・運営しています
+      </p>
+      <p>
+        <a
+          href={sourceCode}
+          target="_blank"
+          rel="noreferrer"
+          className={linkClassName}
+        >
+          ソースコード（AGPL-3.0）
+        </a>
+      </p>
     </div>
   );
 }

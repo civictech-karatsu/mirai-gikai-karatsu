@@ -20,81 +20,114 @@ type InterviewMessageInsert =
 type InterviewReportInsert =
   Database["public"]["Tables"]["interview_report"]["Insert"];
 
-// 定例会データ
+// 定例会データ（出典: 唐津市議会「会期および議事日程」）
 export const councilSessions: CouncilSessionInsert[] = [
   {
-    name: "令和7年 第4回定例会",
-    slug: "r7-4",
-    council_url:
-      "https://www.city.kawasaki.jp/980/page/0000020940.html",
-    start_date: "2025-11-25",
-    end_date: "2025-12-20",
+    name: "令和8年 第4回定例会",
+    slug: "r8-4",
+    council_url: "https://www.city.karatsu.lg.jp/site/shigikai/50721.html",
+    start_date: "2026-09-01",
+    end_date: "2026-10-13",
     is_active: true,
   },
   {
-    name: "令和7年 第3回定例会",
-    slug: "r7-3",
-    council_url:
-      "https://www.city.kawasaki.jp/980/page/0000020940.html",
-    start_date: "2025-09-01",
-    end_date: "2025-10-15",
+    name: "令和8年 第3回定例会",
+    slug: "r8-3",
+    council_url: "https://www.city.karatsu.lg.jp/site/shigikai/47548.html",
+    start_date: "2026-06-05",
+    end_date: "2026-06-26",
+    is_active: false,
+  },
+  {
+    name: "令和8年 第2回定例会",
+    slug: "r8-2",
+    council_url: "https://www.city.karatsu.lg.jp/site/shigikai/43178.html",
+    start_date: "2026-02-25",
+    end_date: "2026-03-23",
     is_active: false,
   },
 ];
 
-// 会派データ
+// 会派データ（出典: 唐津市議会「会派」 https://www.city.karatsu.lg.jp/site/shigikai/4064.html）
 export const factions: FactionInsert[] = [
   {
-    name: "mirai",
-    display_name: "みらい",
+    name: "shinseikai",
+    display_name: "新生会",
     sort_order: 1,
     is_active: true,
   },
   {
-    name: "jimin",
-    display_name: "自民党",
+    name: "shiseikai",
+    display_name: "志政会",
     sort_order: 2,
+    is_active: true,
+  },
+  {
+    name: "shinpu-karatsu",
+    display_name: "新風唐津",
+    sort_order: 3,
     is_active: true,
   },
   {
     name: "komei",
     display_name: "公明党",
-    sort_order: 3,
-    is_active: true,
-  },
-];
-
-// 委員会データ
-export const committees: CommitteeInsert[] = [
-  {
-    name: "総務委員会",
-    description: "市の基本計画、財政、臨海部、商工業などについての審査",
-    sort_order: 1,
-    is_active: true,
-  },
-  {
-    name: "文教委員会",
-    description:
-      "交通安全、文化、スポーツ、こども、保育園、学校、教育などについての審査",
-    sort_order: 2,
-    is_active: true,
-  },
-  {
-    name: "健康福祉委員会",
-    description: "お年寄り、障がい者、保健衛生、病院、消防についての審査",
-    sort_order: 3,
-    is_active: true,
-  },
-  {
-    name: "まちづくり委員会",
-    description: "都市計画、道路、河川、住宅、公園などについての審査",
     sort_order: 4,
     is_active: true,
   },
   {
-    name: "環境委員会",
-    description: "ごみ、環境、水道、市営バスなどについての審査",
+    name: "toseikai",
+    display_name: "唐誠会",
     sort_order: 5,
+    is_active: true,
+  },
+  {
+    name: "shimin-liberal",
+    display_name: "市民リベラル",
+    sort_order: 6,
+    is_active: true,
+  },
+  {
+    name: "kyosan",
+    display_name: "日本共産党",
+    sort_order: 7,
+    is_active: true,
+  },
+  {
+    name: "karatsu-shimin",
+    display_name: "唐津市民党",
+    sort_order: 8,
+    is_active: true,
+  },
+];
+
+// 委員会データ（出典: 唐津市議会「常任委員会」 https://www.city.karatsu.lg.jp/site/shigikai/1068.html）
+export const committees: CommitteeInsert[] = [
+  {
+    name: "総務教育委員会",
+    description:
+      "総合政策部、総務部、消防本部、会計課、教育委員会、選挙管理委員会および監査委員の所管に関する事項",
+    sort_order: 1,
+    is_active: true,
+  },
+  {
+    name: "産業経済委員会",
+    description:
+      "地域づくり部、農林水産部、商工観光部、ボートレース企業局、農業委員会の所管に関する事項",
+    sort_order: 2,
+    is_active: true,
+  },
+  {
+    name: "都市整備委員会",
+    description:
+      "都市整備部、上下水道局の所管に関する事項",
+    sort_order: 3,
+    is_active: true,
+  },
+  {
+    name: "市民厚生委員会",
+    description:
+      "市民環境部、健康づくり部、福祉こども部の所管に関する事項",
+    sort_order: 4,
     is_active: true,
   },
 ];
@@ -122,7 +155,7 @@ export const bills: BillInsert[] = [
   {
     name: "川崎市子ども医療費助成条例の一部改正",
     status: "in_committee",
-    status_note: "文教委員会で審査中",
+    status_note: "総務教育委員会で審査中",
     published_at: "2025-11-25T09:00:00+09:00",
     publish_status: "published",
     is_featured: true,

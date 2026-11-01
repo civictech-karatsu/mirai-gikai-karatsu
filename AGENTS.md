@@ -9,28 +9,28 @@
 
 ```bash
 # 1. worktreeを作成
-git worktree add ../mirai-gikai-kawasaki-worktree/<branch-name> -b <branch-name>
+git worktree add ../mirai-gikai-karatsu-worktree/<branch-name> -b <branch-name>
 
 # 2. settings.local.jsonをコピー（権限設定のため必須）
-mkdir -p ../mirai-gikai-kawasaki-worktree/<branch-name>/.claude
-cp .claude/settings.local.json ../mirai-gikai-kawasaki-worktree/<branch-name>/.claude/
+mkdir -p ../mirai-gikai-karatsu-worktree/<branch-name>/.claude
+cp .claude/settings.local.json ../mirai-gikai-karatsu-worktree/<branch-name>/.claude/
 
 # 3. .envをコピー（環境変数の引き継ぎ）
-cp .env ../mirai-gikai-kawasaki-worktree/<branch-name>/
+cp .env ../mirai-gikai-karatsu-worktree/<branch-name>/
 
 # 4. 依存パッケージをインストール
-cd ../mirai-gikai-kawasaki-worktree/<branch-name> && pnpm install --frozen-lockfile
+cd ../mirai-gikai-karatsu-worktree/<branch-name> && pnpm install --frozen-lockfile
 ```
 
-- **目的**: kawasaki/developブランチを常にクリーンに保ち、作業の分離と並列作業を容易にする
-- **重要**: worktreeは必ずプロジェクト外（`../mirai-gikai-kawasaki-worktree/`）に作成すること。プロジェクト内（`.claude/worktrees/` 等）に作成するとBiomeが「nested root configuration」エラーを起こす。
+- **目的**: karatsu/developブランチを常にクリーンに保ち、作業の分離と並列作業を容易にする
+- **重要**: worktreeは必ずプロジェクト外（`../mirai-gikai-karatsu-worktree/`）に作成すること。プロジェクト内（`.claude/worktrees/` 等）に作成するとBiomeが「nested root configuration」エラーを起こす。
 
 ### Worktreeクリーンアップ（必須）
 PR作成・マージ完了後は、不要になったworktreeを速やかに削除すること。放置するとディスクを圧迫し、Biome等のツールがエラーを起こす原因になる。
 
 ```bash
 # 1. worktreeを削除
-git worktree remove ../mirai-gikai-kawasaki-worktree/<branch-name>
+git worktree remove ../mirai-gikai-karatsu-worktree/<branch-name>
 
 # 2. マージ済みブランチを削除
 git branch -d <branch-name>
@@ -42,14 +42,18 @@ git worktree prune
 ### 実装完了後は即PR作成
 実装完了後は「コミットしますか？」等の確認を挟まず、コミット → push → PR作成まで一気に進めること。ユーザーへの確認は不要。
 
-**ベースブランチは必ず `kawasaki/develop`**。`develop` や `main` へのPRは出さないこと。
+**ベースブランチは必ず `karatsu/develop`**。`develop` や `main` へのPRは出さないこと。
 ```bash
-gh pr create --base kawasaki/develop ...
+gh pr create --base karatsu/develop ...
 ```
 
 ### セルフレビュー必須
 実装完了後（コミット前）に、必ず `/review` スキルを実行してセルフレビューを受けること。`/review` はCodexレビュー・`test-guidelines-checker` によるテストガイドラインチェック・`code-quality-checker` によるコード品質チェックを同時に実行する。指摘があれば修正してからコミットする。
 レビューを通過したら、ユーザーに確認せずそのままPR作成まで一気に進めること（push → `gh pr create`）。
+
+### fork ガイドライン準拠（みらい議会＠唐津市）
+本リポジトリはチームみらい「みらい議会」の fork。サービス名・ロゴ・画像・配色・フッター・免責文言・ソースコードリンク・`site.config.ts` に触れる変更、上流（`upstream` / `fukuoka`）からの取り込み、デプロイ前、PR 作成前には、必ず `/fork-guidelines` スキルを使い、`bash .claude/skills/fork-guidelines/scripts/check.sh` が NG 0 件になることを確認すること。
+出典: チームみらい「『みらい議会』運用ガイドライン」 https://note.com/team_mirai_jp/n/nc59ec347e8c7 と本家 `FORK_GUIDELINES.md`。
 
 ### 並列PR作成
 複数の独立したPRを作成する場合は `/parallel-pr` スキルを使用すること。

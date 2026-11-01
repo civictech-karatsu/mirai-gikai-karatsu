@@ -1,17 +1,21 @@
-# みらい議会ー川崎版
+# みらい議会＠唐津市
 
-https://mirai-gikai-kawasaki-web.vercel.app/
-※後でドメイン変更するかもしれない
+佐賀県唐津市議会で今どんな議案が検討されているかを、やさしい言葉で伝える非公式サイトです。
 
-## 注意事項
-- このプロジェクトは「チームみらい」が開発・運営している「みらい議会」をForkして開発したものとなります。  
-- **非公式**ですので、ここでの不具合や気になる点についての問い合わせは  
-  党公式ではなく[GondoTakashi](https://x.com/TakashiGondo)にご連絡ください。
+> **本リポジトリについて**
+>
+> - 政党チームみらいが開発したオープンソースプロダクト [team-mirai/mirai-gikai](https://github.com/team-mirai/mirai-gikai)（「みらい議会」、本家: https://gikai.team-mir.ai/ ）の派生版です。
+>   [川崎版](https://github.com/bakumon1107/mirai-gikai-fukuoka-city/tree/kawasaki/develop)（福岡版リポジトリの `kawasaki/develop`）をベースに、唐津市議会向けに改変しました。
+> - 運営: [シビックテック唐津](https://civictech-karatsu.org/)
+> - 改変日: 2026-11-01 〜（サイト名・ロゴ・画像・配色・免責表示・唐津市議会の会期/会派/委員会データなど）
+> - AGPL-3.0 ライセンスを継承し、改変後のソースコードも同ライセンスで公開しています。
+> - **これは政党チームみらいが運営しているものではありません。** 不具合や問い合わせは党ではなくシビックテック唐津へお願いします。
 
-## 他地方議会向けForkガイド
-- 他の市議会・県議会等のバージョンを作成したい場合は、  
-  以下のドキュメントを参考にすると早いと思います  
-  [fork手順](docs/kawasaki/20260304_1000_別地域向けfork手順.md)
+## 開発メモ
+
+- 作業ブランチ: `karatsu/develop`
+- fork ガイドライン準拠チェック: `bash .claude/skills/fork-guidelines/scripts/check.sh`（詳細は `.claude/skills/fork-guidelines/SKILL.md`）
+- 他の議会向けに fork する場合: [fork手順](docs/kawasaki/20260304_1000_別地域向けfork手順.md)
 
 ---
 
