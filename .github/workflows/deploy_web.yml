@@ -1,8 +1,8 @@
 name: Migrate DB then Deploy Web
 
 on:
-  push:
-    branches: [kawasaki/develop]
+  # 本番環境（Supabase / Vercel）の準備ができるまでは手動実行のみ。
+  # 準備後に push: branches: [karatsu/develop] を戻す。
   workflow_dispatch:
 
 jobs:
