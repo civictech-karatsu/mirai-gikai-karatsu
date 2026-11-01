@@ -1,8 +1,6 @@
 import type { Database } from "@mirai-gikai/supabase";
+import { billTagMap } from "./bill-contents-data";
 
-type BillInsert = Database["public"]["Tables"]["bills"]["Insert"];
-type FactionStanceInsert =
-  Database["public"]["Tables"]["faction_stances"]["Insert"];
 type TagInsert = Database["public"]["Tables"]["tags"]["Insert"];
 type BillsTagsInsert = Database["public"]["Tables"]["bills_tags"]["Insert"];
 type CouncilSessionInsert =
@@ -171,67 +169,14 @@ export const tags: TagInsert[] = [
   },
 ];
 
-export const bills: BillInsert[] = [
-  {
-    name: "川崎市子ども医療費助成条例の一部改正",
-    status: "in_committee",
-    status_note: "総務教育委員会で審査中",
-    published_at: "2025-11-25T09:00:00+09:00",
-    publish_status: "published",
-    is_featured: true,
-    thumbnail_url: "https://placehold.co/600x400",
-  },
-  {
-    name: "川崎市地域包括ケアシステム推進条例",
-    status: "approved",
-    status_note: "本会議で可決",
-    published_at: "2025-09-15T10:00:00+09:00",
-    publish_status: "published",
-    is_featured: true,
-    thumbnail_url: "https://placehold.co/600x400",
-  },
-  {
-    name: "川崎市公園条例の一部改正",
-    status: "rejected",
-    status_note: "本会議で否決",
-    published_at: "2025-10-01T09:00:00+09:00",
-    publish_status: "published",
-    is_featured: false,
-    thumbnail_url: "https://placehold.co/600x400",
-  },
-  {
-    name: "川崎市学校給食費の無償化に関する条例",
-    status: "approved",
-    status_note: "本会議で可決、来年度から実施",
-    published_at: "2025-09-10T09:00:00+09:00",
-    publish_status: "published",
-    is_featured: false,
-    thumbnail_url: "https://placehold.co/600x400",
-  },
-  {
-    name: "川崎市防災対策基本条例の一部改正",
-    status: "rejected",
-    status_note: "本会議で否決",
-    published_at: "2025-09-20T10:00:00+09:00",
-    publish_status: "published",
-    is_featured: false,
-    thumbnail_url: "https://placehold.co/600x400",
-  },
-];
+// 議案データ（令和8年第4回定例会の実議案。bill-contents-data.ts で読み込む）
+export { bills } from "./bill-contents-data";
 
 // 議案とタグの関連付け
 export function createBillsTags(
   insertedBills: { id: string; name: string }[],
   insertedTags: { id: string; label: string }[]
 ): Omit<BillsTagsInsert, "id" | "created_at">[] {
-  const billTagMap: { [billName: string]: string[] } = {
-    "川崎市子ども医療費助成条例の一部改正": ["子育て・教育"],
-    "川崎市地域包括ケアシステム推進条例": ["福祉・医療"],
-    "川崎市公園条例の一部改正": ["まちづくり・環境"],
-    "川崎市学校給食費の無償化に関する条例": ["子育て・教育"],
-    "川崎市防災対策基本条例の一部改正": ["まちづくり・環境"],
-  };
-
   const billsTags: Omit<BillsTagsInsert, "id" | "created_at">[] = [];
 
   for (const bill of insertedBills) {
@@ -248,54 +193,6 @@ export function createBillsTags(
   }
 
   return billsTags;
-}
-
-// 会派見解データ
-const factionStancesData: Omit<
-  FactionStanceInsert,
-  "bill_id" | "faction_id"
->[] = [
-  {
-    type: "for",
-    comment: `子どもの医療費助成の拡充は、子育て世代の経済的負担を軽減する重要な施策です。
-
-川崎市の子育て環境をより良くし、安心して子育てできるまちづくりに貢献すると考えます。`,
-  },
-  {
-    type: "for",
-    comment: `高齢化が進む中、地域包括ケアシステムの推進は川崎市にとって重要な課題です。
-
-医療・介護・予防・住まい・生活支援を一体的に提供する体制の整備は、市民の安心につながります。`,
-  },
-  {
-    type: "for",
-    comment: `公園は市民の憩いの場であり、防災拠点としても重要です。
-
-この条例改正により、公園の利活用が促進され、地域コミュニティの活性化が期待できます。`,
-  },
-  {
-    type: "for",
-    comment: `学校給食の無償化は、子育て支援と教育の充実を同時に実現する重要な政策です。
-
-全ての子どもが質の高い食事を平等に受けられることは、健康格差の解消にもつながります。川崎市の地元食材を活用した食育の推進も期待できます。`,
-  },
-  {
-    type: "against",
-    comment: `防災対策の強化は重要ですが、現行条例の運用改善で対応できる部分も多いと考えます。
-
-条例改正よりも先に、現場レベルでの防災訓練の充実や地域防災力の向上に注力すべきです。`,
-  },
-];
-
-export function createFactionStances(
-  insertedBills: { id: string; name: string }[],
-  miraiFactionId: string
-): FactionStanceInsert[] {
-  return factionStancesData.map((stance, index) => ({
-    ...stance,
-    bill_id: insertedBills[index]?.id || "",
-    faction_id: miraiFactionId,
-  }));
 }
 
 // インタビュー設定を作成（最初の議案用）
@@ -648,25 +545,25 @@ export function createDemoMessages(): Omit<
       interview_session_id: DEMO_SESSION_ID,
       role: "assistant",
       content:
-        "こんにちは！本日はインタビューにご協力いただきありがとうございます。\n\n川崎市議会で審議されている議案について、市民の皆さまのご意見をお聞かせください。この議案について、どのようにお考えですか？",
+        "こんにちは！本日はインタビューにご協力いただきありがとうございます。\n\n唐津市議会で審議された議案について、市民の皆さまのご意見をお聞かせください。この議案について、どのようにお考えですか？",
     },
     {
       interview_session_id: DEMO_SESSION_ID,
       role: "user",
       content:
-        "市政のデジタル化や、ムダの削減を達成して欲しい",
+        "クラブの運営にかかる費用を考えると見直しは理解できますが、保護者の負担が増えるのは気になります。",
     },
     {
       interview_session_id: DEMO_SESSION_ID,
       role: "assistant",
       content:
-        "なるほど。市政のデジタル化を通じて、行政サービスの効率化と市民の利便性向上を期待されているということですね。とても重要な指摘だと思います。\n\n具体的に、川崎市のどのような行政手続きや窓口サービスがデジタル化されると良いとお考えですか？",
+        "なるほど。運営の現場をご存じのお立場から、費用の事情と保護者の負担の両方を気にされているのですね。\n\n具体的に、どのような点が気になりますか？",
     },
     {
       interview_session_id: DEMO_SESSION_ID,
       role: "user",
       content:
-        "市役所の窓口手続きのオンライン化や、行政文書のデジタル化が進むと市民にとって便利になると期待しています。",
+        "土曜日の上乗せで、土曜日に仕事がある家庭の負担が大きくなると思います。利用の状況を見ながら、必要なら減免も検討してほしいです。",
     },
     {
       interview_session_id: DEMO_SESSION_ID,
@@ -684,17 +581,16 @@ export function createDemoReport(): InterviewReportInsert {
     interview_session_id: DEMO_SESSION_ID,
     stance: "neutral",
     summary:
-      "デジタル化推進による省庁の業務効率化や官僚の働き方改革には期待するが、システム移行時の混乱や中小フォワーダーへの対応コスト増大について懸念も大きい。慎重な段階的導入を求める。",
+      "運営にかかる費用を考えると利用料の見直しは理解できるが、土曜日に利用する家庭の負担が増えることを懸念している。利用の状況を見ながら、減免などの検討を求める。",
     role: "subject_expert",
-    role_title: "フォワーダー",
+    role_title: "放課後児童支援員",
     role_description:
-      "川崎市在住の会社員\n行政手続きの煩雑さを日常的に感じている",
+      "唐津市在住\n放課後児童クラブで支援員として働いている",
     opinions: [
       {
-        title:
-          "市政のデジタル化や、ムダの削減を達成して欲しい",
+        title: "土曜日に利用する家庭の負担が気になる",
         content:
-          "市役所の窓口手続きのオンライン化や、行政文書のデジタル化が進むと市民にとって便利になると期待している。",
+          "土曜日の上乗せで、土曜日に仕事がある家庭の負担が大きくなる。利用の状況を見ながら、必要なら減免も検討してほしい。",
       },
     ],
     is_public_by_user: true,
@@ -749,19 +645,19 @@ export function createAdditionalDemoMessages(): Omit<
       interview_session_id: DEMO_SESSION_ID_WORK,
       role: "user",
       content:
-        "子どもの医療費負担が大きいので、この議案には賛成です。",
+        "従業員に子育て中の人が多いので、クラブが続いていくことが大事だと思います。この議案には賛成です。",
     },
     {
       interview_session_id: DEMO_SESSION_ID_WORK,
       role: "assistant",
       content:
-        "子育て世帯としてのお立場からのご意見ですね。具体的にどのような影響がありますか？",
+        "働く人を支える事業者としてのお立場からのご意見ですね。具体的にどのような影響がありますか？",
     },
     {
       interview_session_id: DEMO_SESSION_ID_WORK,
       role: "user",
       content:
-        "共働きで子ども2人を育てていますが、医療費の自己負担が家計を圧迫しています。助成拡充で少しでも負担が減れば助かります。",
+        "放課後に子どもを預けられないと、短時間勤務にせざるを得ない人もいます。見直しで運営が安定するなら、事業者としても助かります。",
     },
     {
       interview_session_id: DEMO_SESSION_ID_WORK,
@@ -780,19 +676,19 @@ export function createAdditionalDemoMessages(): Omit<
       interview_session_id: DEMO_SESSION_ID_DAILY,
       role: "user",
       content:
-        "子どもが小さいので、医療費の負担が軽くなるのは嬉しいです。",
+        "小学生2人を預けているので、利用料が上がるのは家計に響きます。",
     },
     {
       interview_session_id: DEMO_SESSION_ID_DAILY,
       role: "assistant",
       content:
-        "生活への影響が大きいとのことですね。どのような場面で医療費の負担を感じますか？",
+        "生活への影響が大きいとのことですね。どのくらいの負担になりそうですか？",
     },
     {
       interview_session_id: DEMO_SESSION_ID_DAILY,
       role: "user",
       content:
-        "風邪や怪我で小児科にかかることが多く、月に何回も通院することがあります。自己負担が積み重なると大変です。",
+        "2人分で毎月3,000円、8月は6,000円増えます。土曜日も使うともっと増えるので、正直なところ反対です。",
     },
     {
       interview_session_id: DEMO_SESSION_ID_DAILY,
@@ -811,19 +707,19 @@ export function createAdditionalDemoMessages(): Omit<
       interview_session_id: DEMO_SESSION_ID_CITIZEN,
       role: "user",
       content:
-        "財源が気になりますが、子育て支援として医療費助成は必要だと思います。",
+        "子育て支援は大事ですが、市の財政も厳しいと聞くので判断に迷います。",
     },
     {
       interview_session_id: DEMO_SESSION_ID_CITIZEN,
       role: "assistant",
       content:
-        "財源と子育て支援のバランスを考えていらっしゃるのですね。どのような点が気になりますか？",
+        "子育て支援と市の財政のバランスを考えていらっしゃるのですね。どのような点が気になりますか？",
     },
     {
       interview_session_id: DEMO_SESSION_ID_CITIZEN,
       role: "user",
       content:
-        "他の行政サービスとのバランスも考えつつ、子育て世帯への支援として医療費助成は拡充すべきだと思います。",
+        "利用料を上げる理由と、集めたお金がクラブの運営にどう使われるのかを、もう少し説明してほしいです。",
     },
     {
       interview_session_id: DEMO_SESSION_ID_CITIZEN,
@@ -842,16 +738,16 @@ export function createAdditionalDemoReports(): InterviewReportInsert[] {
       interview_session_id: DEMO_SESSION_ID_WORK,
       stance: "for",
       summary:
-        "子育て世帯として医療費負担軽減のため賛成",
+        "従業員の子育てを支えるため、クラブの運営が安定する見直しに賛成",
       role: "work_related",
-      role_title: "運送会社経営者",
+      role_title: "商店経営者",
       role_description:
-        "川崎市在住の共働き世帯\n子ども2人\n医療費の負担を日常的に感じている",
+        "唐津市内で商店を経営\n従業員に子育て中の人が多い",
       opinions: [
         {
-          title: "子どもの医療費負担が大きい",
+          title: "クラブが続くことが働く人の支えになる",
           content:
-            "共働きで子ども2人を育てているが、医療費の自己負担が家計を圧迫している。助成拡充で負担が減れば助かる。",
+            "放課後に子どもを預けられないと、短時間勤務にせざるを得ない従業員もいる。見直しで運営が安定するなら事業者としても助かる。",
         },
       ],
       is_public_by_user: true,
@@ -860,18 +756,18 @@ export function createAdditionalDemoReports(): InterviewReportInsert[] {
     {
       id: DEMO_REPORT_ID_DAILY,
       interview_session_id: DEMO_SESSION_ID_DAILY,
-      stance: "for",
+      stance: "against",
       summary:
-        "子育て中の保護者として医療費負担軽減を期待",
+        "小学生2人を預ける保護者として、利用料の引き上げによる家計の負担増に反対",
       role: "daily_life_affected",
-      role_title: "主婦",
+      role_title: "保護者",
       role_description:
-        "川崎市在住の主婦\n小さい子ども2人の子育て中\n医療費の自己負担を日常的に感じている",
+        "唐津市在住の共働き世帯\n小学生2人が放課後児童クラブを利用",
       opinions: [
         {
-          title: "子どもの医療費負担が大きい",
+          title: "2人分の負担増が家計に響く",
           content:
-            "風邪や怪我で小児科にかかることが多く、月に何回も通院する。自己負担が積み重なると家計に影響が大きい。",
+            "2人分で毎月3,000円、8月は6,000円の負担増になる。土曜日も使うとさらに増える。",
         },
       ],
       is_public_by_user: true,
@@ -882,16 +778,16 @@ export function createAdditionalDemoReports(): InterviewReportInsert[] {
       interview_session_id: DEMO_SESSION_ID_CITIZEN,
       stance: "neutral",
       summary:
-        "財源と子育て支援のバランスを考慮して判断",
+        "子育て支援と市の財政のバランスを考え、判断のためにより詳しい説明を求める",
       role: "general_citizen",
       role_title: "会社員",
       role_description:
-        "川崎市在住の会社員\n子育て支援に関心あり\n市の財政にも関心がある",
+        "唐津市在住の会社員\n子育て支援に関心あり\n市の財政にも関心がある",
       opinions: [
         {
-          title: "財源と子育て支援のバランス",
+          title: "引き上げの理由と使い道を知りたい",
           content:
-            "他の行政サービスとのバランスも考えつつ、子育て世帯への支援として医療費助成は拡充すべきと考える。",
+            "利用料を上げる理由と、集めたお金がクラブの運営にどう使われるのかを、もう少し説明してほしい。",
         },
       ],
       is_public_by_user: true,

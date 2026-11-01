@@ -4,7 +4,6 @@ import {
   councilSessions,
   factions,
   committees,
-  createFactionStances,
   createBillsTags,
   createInterviewConfig,
   createInterviewQuestions,
@@ -133,33 +132,18 @@ async function seedDatabase() {
 
     console.log(`✅ Inserted ${insertedBills.length} bills`);
 
-    // Link first 3 bills to the current council session
+    // サンプル議案はすべて現在の会期（令和8年第4回定例会）のもの
     const currentSessionId = insertedCouncilSessions[0]?.id;
     if (currentSessionId) {
-      const billsToLink = insertedBills.slice(0, 3);
-      for (const bill of billsToLink) {
-        await supabase
-          .from("bills")
-          .update({ council_session_id: currentSessionId })
-          .eq("id", bill.id);
-      }
+      await supabase
+        .from("bills")
+        .update({ council_session_id: currentSessionId })
+        .in(
+          "id",
+          insertedBills.map((bill) => bill.id)
+        );
       console.log(
-        `🔗 Linked ${billsToLink.length} bills to current council session`
-      );
-    }
-
-    // Link last 5 bills to the previous council session
-    const previousSessionId = insertedCouncilSessions[1]?.id;
-    if (previousSessionId) {
-      const previousBills = insertedBills.slice(-5);
-      for (const bill of previousBills) {
-        await supabase
-          .from("bills")
-          .update({ council_session_id: previousSessionId })
-          .eq("id", bill.id);
-      }
-      console.log(
-        `🔗 Linked ${previousBills.length} bills to previous council session`
+        `🔗 Linked ${insertedBills.length} bills to current council session`
       );
     }
 
@@ -183,35 +167,6 @@ async function seedDatabase() {
     }
 
     console.log(`✅ Inserted ${insertedContents.length} bill contents`);
-
-    // Insert faction_stances (みらい会派の見解)
-    console.log("🎯 Inserting faction stances...");
-    const miraiFaction = insertedFactions.find((f) => f.name === "mirai");
-    let insertedStancesCount = 0;
-
-    if (miraiFaction) {
-      const factionStances = createFactionStances(
-        insertedBills,
-        miraiFaction.id
-      );
-
-      const { data: insertedStances, error: stancesError } = await supabase
-        .from("faction_stances")
-        .insert(factionStances)
-        .select("id");
-
-      if (stancesError) {
-        throw new Error(
-          `Failed to insert faction stances: ${stancesError.message}`
-        );
-      }
-
-      if (insertedStances) {
-        insertedStancesCount = insertedStances.length;
-      }
-    }
-
-    console.log(`✅ Inserted ${insertedStancesCount} faction stances`);
 
     // Insert bills_tags (関連付け)
     console.log("🔗 Inserting bills-tags relations...");
@@ -601,7 +556,6 @@ async function seedDatabase() {
     console.log(`  Tags: ${insertedTags.length}`);
     console.log(`  Bills: ${insertedBills.length}`);
     console.log(`  Bill Contents: ${insertedContents.length}`);
-    console.log(`  Faction Stances: ${insertedStancesCount}`);
     console.log(`  Bills-Tags Relations: ${insertedBillsTags.length}`);
     console.log(`  Interview Config: ${interviewConfigData ? 1 : 0}`);
     console.log(`  Interview Questions: ${insertedQuestionsCount}`);
