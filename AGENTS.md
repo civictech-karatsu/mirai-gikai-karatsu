@@ -44,7 +44,8 @@ git worktree prune
 
 **ベースブランチは必ず `karatsu/develop`**。`develop` や `main` へのPRは出さないこと。
 ```bash
-gh pr create --base karatsu/develop ...
+# upstream（team-mirai）が remote にあるため、--repo を必ず付ける
+gh pr create --repo civictech-karatsu/mirai-gikai-karatsu --base karatsu/develop ...
 ```
 
 ### セルフレビュー必須
