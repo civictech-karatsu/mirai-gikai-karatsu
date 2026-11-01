@@ -149,6 +149,26 @@ export const tags: TagInsert[] = [
     description: "福祉、医療、高齢者支援に関する議案",
     featured_priority: 3,
   },
+  {
+    label: "文化・観光",
+    description: "文化施設、観光施設、文化財に関する議案",
+    featured_priority: 4,
+  },
+  {
+    label: "財政・予算",
+    description: "予算、決算、基金など市のお金に関する議案",
+    featured_priority: 5,
+  },
+  {
+    label: "農林水産",
+    description: "農業、林業、水産業に関する議案",
+    featured_priority: 6,
+  },
+  {
+    label: "防災",
+    description: "防災、災害復旧に関する議案",
+    featured_priority: 7,
+  },
 ];
 
 export const bills: BillInsert[] = [
