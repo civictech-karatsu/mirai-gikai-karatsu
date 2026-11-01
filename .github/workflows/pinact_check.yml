@@ -5,7 +5,7 @@ on:
     paths:
       - '.github/workflows/**'
   push:
-    branches: [main, develop]
+    branches: [karatsu/develop]
     paths:
       - '.github/workflows/**'
 
@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
 
       - name: Run pinact
         uses: suzuki-shunsuke/pinact-action@49cbd6acd0dbab6a6be2585d1dbdaa43b4410133 # v1.0.0
