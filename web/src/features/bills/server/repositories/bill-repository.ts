@@ -1,5 +1,6 @@
 import "server-only";
 import { createAdminClient } from "@mirai-gikai/supabase";
+import { siteConfig } from "@/config/site.config";
 import type { DifficultyLevelEnum } from "@/features/bill-difficulty/shared/types";
 import type { MiraiStance } from "../../shared/types";
 
@@ -504,7 +505,8 @@ export async function findPreviewToken(billId: string, token: string) {
 export async function findBillIdsWithPublicInterview(
   billIds: string[]
 ): Promise<Set<string>> {
-  if (billIds.length === 0) {
+  // AIインタビュー機能がオフのときは「受付中」を出さない
+  if (billIds.length === 0 || !siteConfig.features.aiInterview) {
     return new Set();
   }
 
