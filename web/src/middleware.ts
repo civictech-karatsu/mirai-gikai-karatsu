@@ -34,6 +34,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL("/not-found", request.url));
   }
 
+  // AIチャット機能がオフのときは、チャットAPIを直接呼ばれてもトークンを消費しないようにする
+  if (!siteConfig.features.aiChat && isChatApiPath(request.nextUrl.pathname)) {
+    return NextResponse.json({ error: "Not Found" }, { status: 404 });
+  }
+
   // Supabaseセッションをリフレッシュ（トークン期限切れ時に自動更新）
   const response = await updateSupabaseSession(request);
 
@@ -105,6 +110,13 @@ const INTERVIEW_PATH_PATTERNS = [
  */
 export function isInterviewPath(pathname: string): boolean {
   return INTERVIEW_PATH_PATTERNS.some((pattern) => pattern.test(pathname));
+}
+
+/**
+ * AIチャット機能のAPIパスかどうか
+ */
+export function isChatApiPath(pathname: string): boolean {
+  return /^\/api\/chat(\/|$)/.test(pathname);
 }
 
 export function isHtmlAcceptHeader(accept: string): boolean {

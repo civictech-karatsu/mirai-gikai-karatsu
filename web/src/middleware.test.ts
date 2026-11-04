@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  isChatApiPath,
   isHtmlAcceptHeader,
   isInterviewPath,
   isValidDifficultyLevel,
@@ -80,5 +81,22 @@ describe("isInterviewPath", () => {
     "/api/og/bill",
   ])("should return false for %s", (pathname) => {
     expect(isInterviewPath(pathname)).toBe(false);
+  });
+});
+
+describe("isChatApiPath", () => {
+  it.each([
+    "/api/chat",
+    "/api/chat/",
+  ])("should return true for %s", (pathname) => {
+    expect(isChatApiPath(pathname)).toBe(true);
+  });
+
+  it.each([
+    "/api/chatbot",
+    "/api/interview/chat",
+    "/chat",
+  ])("should return false for %s", (pathname) => {
+    expect(isChatApiPath(pathname)).toBe(false);
   });
 });
