@@ -26,6 +26,8 @@ export const AI_MODELS = {
   claude_haiku_4_5: "anthropic/claude-haiku-4.5",
   claude_sonnet_4_6: "anthropic/claude-sonnet-4.6",
   claude_opus_4_6: "anthropic/claude-opus-4.6",
+  // --- DeepSeek（AI Gateway を通さず DeepSeek API に直接つなぐ。default-provider.ts） ---
+  deepseek_flash: "deepseek/deepseek-flash",
 } as const;
 
 export type AiModel = (typeof AI_MODELS)[keyof typeof AI_MODELS];

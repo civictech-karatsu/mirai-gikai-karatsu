@@ -3,6 +3,8 @@
  * アプリケーション全体で使用する環境変数を一元管理
  */
 
+import { AI_MODELS } from "@/lib/ai/models";
+
 if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
   throw new Error("環境変数 NEXT_PUBLIC_SUPABASE_URL が設定されていません");
 }
@@ -70,6 +72,8 @@ export const env = {
     promptLabel: process.env.LANGFUSE_PROMPT_LABEL || "production",
   },
   chat: {
+    // "provider/model" 形式。DeepSeek は "deepseek/deepseek-flash"（DEEPSEEK_API_KEY が必要）
+    model: process.env.CHAT_MODEL || AI_MODELS.gpt4o,
     dailyUserCostLimitUsd: chatDailyUserCostLimitUsd,
     dailyTotalCostLimitUsd: chatDailyTotalCostLimitUsd,
     monthlyTotalCostLimitUsd: chatMonthlyTotalCostLimitUsd,

@@ -16,13 +16,13 @@ import {
 } from "@/features/chat/shared/constants";
 import { ChatError, ChatErrorCode } from "@/features/chat/shared/types/errors";
 import { findPublicInterviewConfigByBillId } from "@/features/interview-config/server/repositories/interview-config-repository";
+import { resolveLanguageModel } from "@/lib/ai/default-provider";
 import { env } from "@/lib/env";
 import {
   type CompiledPrompt,
   createPromptProvider,
   type PromptProvider,
 } from "@/lib/prompt";
-import { AI_MODELS } from "@/lib/ai/models";
 import { isWithinDailyCostLimit, recordChatUsage } from "./cost-tracker";
 import {
   checkSystemDailyCostLimit,
@@ -95,7 +95,7 @@ export async function handleChatRequest({
     promptProvider
   );
   // Model configuration
-  const model = deps?.model ?? AI_MODELS.gpt4o;
+  const model = deps?.model ?? env.chat.model;
   const modelName =
     typeof model === "string" ? model : (model.modelId ?? "unknown");
 
@@ -120,7 +120,7 @@ export async function handleChatRequest({
   // Generate streaming response
   try {
     const result = streamText({
-      model,
+      model: resolveLanguageModel(model),
       system: systemPrompt,
       messages: await convertToModelMessages(messages),
       tools,

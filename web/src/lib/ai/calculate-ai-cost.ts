@@ -96,6 +96,12 @@ export const modelPricing: Record<string, ModelPricing> = {
     inputTokensPerMillionUsd: 5,
     outputTokensPerMillionUsd: 25,
   },
+  // --- DeepSeek ---
+  // ピーク時間帯の料金（キャッシュなし）で見積もる
+  [AI_MODELS.deepseek_flash]: {
+    inputTokensPerMillionUsd: 0.3,
+    outputTokensPerMillionUsd: 1.2,
+  },
 };
 
 const COST_DECIMALS = 6;
