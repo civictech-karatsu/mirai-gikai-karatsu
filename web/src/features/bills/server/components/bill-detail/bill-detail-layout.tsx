@@ -27,9 +27,13 @@ export async function BillDetailLayout({
     bill.status === "preparing" ||
     (bill.faction_stances && bill.faction_stances.length > 0);
 
+  // AIインタビュー機能がオフのときは、協力ボタン・ご意見件数・ご意見一覧を出さない
+  const { aiInterview } = siteConfig.features;
   const [interviewConfig, publicReportsResult] = await Promise.all([
-    getInterviewConfig(bill.id),
-    getPublicReportsByBillId(bill.id),
+    aiInterview ? getInterviewConfig(bill.id) : null,
+    aiInterview
+      ? getPublicReportsByBillId(bill.id)
+      : { reports: [], totalCount: 0 },
   ]);
 
   return (
@@ -73,7 +77,7 @@ export async function BillDetailLayout({
             />
           </div>
         )}
-        {siteConfig.features.aiInterview && interviewConfig != null && (
+        {interviewConfig != null && (
           <div className="my-8">
             <InterviewLandingSection billId={bill.id} />
           </div>

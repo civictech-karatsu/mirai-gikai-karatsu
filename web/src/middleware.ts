@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { siteConfig } from "./config/site.config";
 import {
   DIFFICULTY_COOKIE_NAME,
   DIFFICULTY_COOKIE_OPTIONS,
@@ -20,6 +21,17 @@ export async function middleware(request: NextRequest) {
       return NextResponse.rewrite(new URL("/not-found", request.url));
     }
     return NextResponse.next();
+  }
+
+  // AIインタビュー機能がオフのときは、関連ページ・APIを URL 直打ちでも開けないようにする
+  if (
+    !siteConfig.features.aiInterview &&
+    isInterviewPath(request.nextUrl.pathname)
+  ) {
+    if (request.nextUrl.pathname.startsWith("/api/")) {
+      return NextResponse.json({ error: "Not Found" }, { status: 404 });
+    }
+    return NextResponse.rewrite(new URL("/not-found", request.url));
   }
 
   // Supabaseセッションをリフレッシュ（トークン期限切れ時に自動更新）
@@ -78,6 +90,21 @@ function _applyDifficultyCookie(
       DIFFICULTY_COOKIE_OPTIONS
     );
   }
+}
+
+const INTERVIEW_PATH_PATTERNS = [
+  /^\/(preview\/)?bills\/[^/]+\/interview(\/|$)/,
+  /^\/bills\/[^/]+\/opinions(\/|$)/,
+  /^\/report(\/|$)/,
+  /^\/api\/interview(\/|$)/,
+  /^\/api\/og\/report(\/|$)/,
+];
+
+/**
+ * AIインタビュー機能に属するパスかどうか
+ */
+export function isInterviewPath(pathname: string): boolean {
+  return INTERVIEW_PATH_PATTERNS.some((pattern) => pattern.test(pathname));
 }
 
 export function isHtmlAcceptHeader(accept: string): boolean {
