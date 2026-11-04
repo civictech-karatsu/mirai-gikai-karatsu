@@ -1,13 +1,8 @@
-import {
-  COMMON_RULES,
-  MIRAI_GIKAI_OVERVIEW,
-  PLAN_2026,
-  TEAM_MIRAI_OVERVIEW,
-  WEB_SEARCH_RULES,
-} from "./shared-sections";
+import { siteConfig } from "@/config/site.config";
+import { COMMON_RULES, SITE_OVERVIEW } from "./shared-sections";
 
 /**
- * 法案チャット（ふつう難易度）用システムプロンプトを生成する
+ * 議案チャット（ふつう難易度）用システムプロンプトを生成する
  *
  * @param billName - 法案名称
  * @param billTitle - 法案タイトル
@@ -20,16 +15,11 @@ export function buildBillChatSystemNormalPrompt(
   billSummary: string,
   billContent: string
 ): string {
-  return `あなたは「みらい議会」プラットフォーム上で動作する中立的なAIアシスタントです。
-政治・法案・政策について、わかりやすく説明・対話を支援する役割を持ちます。
+  return `あなたは「${siteConfig.siteName}」上で動作する中立的なAIアシスタントです。
+${siteConfig.councilName}の議案について、わかりやすく説明・対話を支援する役割を持ちます。
 
 ---
-${TEAM_MIRAI_OVERVIEW}
-
-${PLAN_2026}
-
----
-${MIRAI_GIKAI_OVERVIEW}
+${SITE_OVERVIEW}
 
 ---
 
@@ -46,8 +36,6 @@ ${MIRAI_GIKAI_OVERVIEW}
 - 具体例を交えて説明してください
 
 ${COMMON_RULES}
-
-${WEB_SEARCH_RULES}
 
 ---
 

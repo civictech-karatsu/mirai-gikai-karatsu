@@ -1,13 +1,13 @@
-import { openai } from "@ai-sdk/openai";
 import type { Database } from "@mirai-gikai/supabase";
 import {
   convertToModelMessages,
+  type LanguageModel,
   streamText,
   tool,
-  type LanguageModel,
   type UIMessage,
 } from "ai";
 import { z } from "zod";
+import { siteConfig } from "@/config/site.config";
 import type { DifficultyLevelEnum } from "@/features/bill-difficulty/shared/types";
 import type { BillWithContent } from "@/features/bills/shared/types";
 import {
@@ -316,7 +316,7 @@ async function determineShouldSuggestInterview(
   context: ChatMessageMetadata,
   messages: UIMessage<ChatMessageMetadata>[]
 ): Promise<boolean> {
-  if (!context.billContext) {
+  if (!siteConfig.features.aiInterview || !context.billContext) {
     return false;
   }
 
@@ -355,6 +355,10 @@ function buildSystemPromptWithInterviewInstructions(
   shouldSuggestInterview: boolean,
   pageType: "home" | "bill" | undefined
 ): string {
+  // AIインタビュー機能がオフのときは、インタビューの存在自体を案内しない
+  if (!siteConfig.features.aiInterview) {
+    return basePrompt;
+  }
   if (pageType === "home") {
     return basePrompt + INTERVIEW_AWARENESS_PROMPT_HOME;
   }
@@ -372,10 +376,9 @@ function buildSystemPromptWithInterviewInstructions(
  * チャットで使用するツール一覧を構築
  */
 function buildTools(shouldSuggestInterview: boolean) {
-  // biome-ignore lint/suspicious/noExplicitAny: OpenAI web_search tool type incompatibility
-  const tools: Record<string, any> = {
-    web_search: openai.tools.webSearch(),
-  };
+  // Web検索ツールは使わない（回答の根拠を議案の解説に限るため。DeepSeek など OpenAI 以外のモデルでは使えない）
+  // biome-ignore lint/suspicious/noExplicitAny: ツールの型がツールごとに異なるため
+  const tools: Record<string, any> = {};
 
   if (shouldSuggestInterview) {
     tools[SUGGEST_INTERVIEW_TOOL_NAME] = tool({

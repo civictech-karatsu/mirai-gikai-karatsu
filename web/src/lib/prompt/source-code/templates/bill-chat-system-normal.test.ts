@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { siteConfig } from "@/config/site.config";
 import { buildBillChatSystemNormalPrompt } from "./bill-chat-system-normal";
 
 describe("buildBillChatSystemNormalPrompt", () => {
@@ -25,7 +26,7 @@ describe("buildBillChatSystemNormalPrompt", () => {
   it("みらい議会の説明が含まれる", () => {
     const result = buildBillChatSystemNormalPrompt("a", "b", "c", "d");
 
-    expect(result).toContain("みらい議会");
-    expect(result).toContain("チームみらい");
+    expect(result).toContain(siteConfig.siteName);
+    expect(result).toContain(siteConfig.councilName);
   });
 });

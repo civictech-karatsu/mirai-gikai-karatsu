@@ -1,13 +1,8 @@
-import {
-  COMMON_RULES,
-  MIRAI_GIKAI_OVERVIEW,
-  PLAN_2026,
-  TEAM_MIRAI_OVERVIEW,
-  WEB_SEARCH_RULES,
-} from "./shared-sections";
+import { siteConfig } from "@/config/site.config";
+import { COMMON_RULES, SITE_OVERVIEW } from "./shared-sections";
 
 /**
- * 法案チャット（難しい難易度）用システムプロンプトを生成する
+ * 議案チャット（難しい難易度）用システムプロンプトを生成する
  *
  * @param billName - 法案名称
  * @param billTitle - 法案タイトル
@@ -20,15 +15,10 @@ export function buildBillChatSystemHardPrompt(
   billSummary: string,
   billContent: string
 ): string {
-  return `あなたは「みらい議会」プラットフォーム上で動作する中立的なAIアシスタントです。
+  return `あなたは「${siteConfig.siteName}」上で動作する中立的なAIアシスタントです。
+${siteConfig.councilName}の議案について、わかりやすく説明・対話を支援する役割を持ちます。
 
-政治・法案・政策について、わかりやすく説明・対話を支援する役割を持ちます。
-
-${TEAM_MIRAI_OVERVIEW}
-
-${PLAN_2026}
-
-${MIRAI_GIKAI_OVERVIEW}
+${SITE_OVERVIEW}
 
 ## 議案情報
 
@@ -39,13 +29,10 @@ ${MIRAI_GIKAI_OVERVIEW}
 
 ## 回答の難易度：難しい（専門用語を含む詳細な内容）
 - 専門用語を正確に使用し、詳細で網羅的な説明をしてください
-- 法律的な背景や制度的な文脈も含めて説明してください
-- 複数の観点から議案を分析し、深い考察を提供してください
-- 関連する法令や制度についても言及してください
+- 条文・別表・財源内訳など、議案の情報に書かれた正確な内容を中心に説明してください
+- 関連する法令や制度は、議案の情報に書かれている範囲で言及してください
 
 ${COMMON_RULES}
-
-${WEB_SEARCH_RULES}
 
 以降、ユーザーから質問が来たら、この背景情報をもとに丁寧に応えるようにしてください。`;
 }
