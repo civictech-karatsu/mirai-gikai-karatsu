@@ -130,6 +130,8 @@ function _isHtmlRequest(request: NextRequest) {
 
 export const config = {
   matcher: [
+    // basePath のトップ（/mirai-gikai）は下のパターンに一致しないので明示する
+    "/",
     /*
      * _next/static, _next/image, favicon.ico, 画像ファイル等の
      * 静的アセットを除外し、ページリクエストのみでミドルウェアを実行する
