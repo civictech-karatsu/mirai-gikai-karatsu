@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     serverSourceMaps: true,
+    serverActions: {
+      // ルーター Worker 経由だと Origin（civictech-karatsu.org）と Host（vercel.app）が
+      // 一致せず Server Action が拒否されるため、公開ドメインを許可する
+      allowedOrigins: ["civictech-karatsu.org"],
+    },
   },
   typedRoutes: true,
   turbopack: {
