@@ -1,5 +1,6 @@
 import { LinkButton } from "@/components/top/link-button";
 import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 
 /**
  * デスクトップメニュー: アクションボタン（サイドバー内）
@@ -10,7 +11,7 @@ export function DesktopMenuActionButtons() {
       <LinkButton
         href={siteConfig.externalLinks.aboutNote}
         icon={{
-          src: "/icons/note-icon.png",
+          src: withBasePath("/icons/note-icon.png"),
           alt: "note",
           width: 20,
           height: 20,
@@ -22,7 +23,7 @@ export function DesktopMenuActionButtons() {
       <LinkButton
         href={siteConfig.externalLinks.donation}
         icon={{
-          src: "/icons/heart-icon.svg",
+          src: withBasePath("/icons/heart-icon.svg"),
           alt: "寄附",
           width: 20,
           height: 20,

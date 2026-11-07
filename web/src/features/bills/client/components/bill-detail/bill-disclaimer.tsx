@@ -1,5 +1,6 @@
 import { LinkButton } from "@/components/top/link-button";
 import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 
 export function BillDisclaimer() {
   return (
@@ -22,9 +23,9 @@ export function BillDisclaimer() {
       </div>
 
       <LinkButton
-        href="/faq"
+        href={withBasePath("/faq")}
         icon={{
-          src: "/icons/question-bubble.svg",
+          src: withBasePath("/icons/question-bubble.svg"),
           alt: "note",
           width: 22,
           height: 22,

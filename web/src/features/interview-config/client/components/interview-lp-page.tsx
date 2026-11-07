@@ -15,6 +15,7 @@ import type { UserReportsResult } from "@/features/interview-report/server/loade
 import { InterviewStatusBadge } from "@/features/interview-session/client/components/interview-status-badge";
 import { NewInterviewButton } from "@/features/interview-session/client/components/new-interview-button";
 import type { LatestInterviewSession } from "@/features/interview-session/server/loaders/get-latest-interview-session";
+import { withBasePath } from "@/lib/base-path";
 import type { InterviewConfig } from "../../server/loaders/get-interview-config";
 import { InterviewActionButtons } from "./interview-action-buttons";
 
@@ -32,12 +33,12 @@ const FEATURES: {
   text: string;
 }[] = [
   {
-    iconSrc: "/icons/interview-ear.svg",
+    iconSrc: withBasePath("/icons/interview-ear.svg"),
     iconSize: { w: 21, h: 29 },
     text: "あなたの経験や考えをAIがチャットで深堀りします",
   },
   {
-    iconSrc: "/icons/interview-messages.svg",
+    iconSrc: withBasePath("/icons/interview-messages.svg"),
     iconSize: { w: 33, h: 26 },
     text: siteConfig.managingParty
       ? `ご意見は${siteConfig.managingParty}の\n政策検討に活かします`
@@ -46,7 +47,7 @@ const FEATURES: {
   ...(siteConfig.managingParty
     ? [
         {
-          iconSrc: "/icons/interview-landmark.svg",
+          iconSrc: withBasePath("/icons/interview-landmark.svg"),
           iconSize: { w: 30, h: 29 },
           text: `あなたの声が${siteConfig.managingParty}を通じて${siteConfig.councilName}に届けられる可能性があります`,
         },
@@ -227,7 +228,7 @@ function _InterviewThemesSection({
           <div key={theme} className="flex gap-2">
             <div className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center">
               <Image
-                src="/icons/check-icon.svg"
+                src={withBasePath("/icons/check-icon.svg")}
                 alt=""
                 width={24}
                 height={24}

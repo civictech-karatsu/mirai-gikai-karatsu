@@ -1,3 +1,4 @@
+import { withBasePath } from "@/lib/base-path";
 import "server-only";
 
 import type { Route } from "next";
@@ -60,7 +61,7 @@ export async function ReportCompletePage({
         <div className="flex flex-col items-center gap-4">
           {/* 完了イラスト */}
           <Image
-            src="/illustrations/interview-complete.svg"
+            src={withBasePath("/illustrations/interview-complete.svg")}
             alt="完了"
             width={236}
             height={152}

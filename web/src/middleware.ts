@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
   // /dev routes: 本番では404、開発ではauthスキップ
   if (request.nextUrl.pathname.startsWith("/dev")) {
     if (process.env.NODE_ENV !== "development") {
-      return NextResponse.rewrite(new URL("/not-found", request.url));
+      return _rewriteToNotFound(request);
     }
     return NextResponse.next();
   }
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
     if (request.nextUrl.pathname.startsWith("/api/")) {
       return NextResponse.json({ error: "Not Found" }, { status: 404 });
     }
-    return NextResponse.rewrite(new URL("/not-found", request.url));
+    return _rewriteToNotFound(request);
   }
 
   // AIチャット機能がオフのときは、チャットAPIを直接呼ばれてもトークンを消費しないようにする
@@ -137,3 +137,12 @@ export const config = {
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],
 };
+
+/**
+ * /not-found へ rewrite する（nextUrl を複製して basePath を保つ）
+ */
+function _rewriteToNotFound(request: NextRequest) {
+  const url = request.nextUrl.clone();
+  url.pathname = "/not-found";
+  return NextResponse.rewrite(url);
+}

@@ -1,7 +1,7 @@
 "use client";
 
-import type { MouseEvent, KeyboardEvent } from "react";
 import Image from "next/image";
+import type { KeyboardEvent, MouseEvent } from "react";
 import {
   shareNative,
   shareOnFacebook,
@@ -9,6 +9,7 @@ import {
   shareOnThreads,
   shareOnTwitter,
 } from "@/features/bills/client/utils/share-handlers";
+import { withBasePath } from "@/lib/base-path";
 
 interface BillShareModalProps {
   isOpen: boolean;
@@ -31,29 +32,29 @@ export function BillShareModal({
   const shareButtons = [
     {
       name: "X (Twitter)",
-      iconPath: "/icons/sns/icon_x.png",
+      iconPath: withBasePath("/icons/sns/icon_x.png"),
       onClick: () => shareOnTwitter(shareMessage, shareUrl),
     },
     {
       name: "Facebook",
-      iconPath: "/icons/sns/icon_facebook.png",
+      iconPath: withBasePath("/icons/sns/icon_facebook.png"),
       onClick: () => shareOnFacebook(shareUrl),
     },
     {
       name: "LINE",
-      iconPath: "/icons/sns/icon_line.png",
+      iconPath: withBasePath("/icons/sns/icon_line.png"),
       onClick: () => shareOnLine(shareMessage, shareUrl),
       className: "md:hidden",
     },
     {
       name: "Threads",
-      iconPath: "/icons/sns/icon_threads.png",
+      iconPath: withBasePath("/icons/sns/icon_threads.png"),
       onClick: () => shareOnThreads(shareMessage, shareUrl),
       className: "md:hidden",
     },
     {
       name: "共有",
-      iconPath: "/icons/share-general.png",
+      iconPath: withBasePath("/icons/share-general.png"),
       onClick: () => shareNative(shareMessage, shareUrl),
       className: "md:hidden",
     },

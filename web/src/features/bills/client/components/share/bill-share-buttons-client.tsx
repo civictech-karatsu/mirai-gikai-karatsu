@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 import { BillShareModal } from "./bill-share-modal";
 
 interface BillShareButtonsClientProps {
@@ -40,7 +41,7 @@ export function BillShareButtonsClient({
           className="rounded-full px-6 py-3 h-auto font-bold text-base bg-mirai-gradient text-gray-800 hover:opacity-90 border border-gray-800"
         >
           <Image
-            src="/icons/ios-share.svg"
+            src={withBasePath("/icons/ios-share.svg")}
             alt="共有アイコン"
             width={28}
             height={28}
@@ -55,7 +56,7 @@ export function BillShareButtonsClient({
             className="rounded-full px-6 py-3 h-auto font-bold text-base bg-white text-gray-800 hover:bg-gray-50 border-gray-800"
           >
             <Image
-              src="/icons/report-error.svg"
+              src={withBasePath("/icons/report-error.svg")}
               alt="報告アイコン"
               width={26}
               height={26}

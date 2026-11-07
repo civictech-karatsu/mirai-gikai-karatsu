@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { Container } from "@/components/layouts/container";
 import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 
 export function Hero() {
   return (
     <div className="relative w-full h-[80vh] min-h-[400px] md:h-[70vh]">
       <Image
-        src="/img/karatsu.jpg"
+        src={withBasePath("/img/karatsu.jpg")}
         alt={siteConfig.councilName}
         fill
         priority

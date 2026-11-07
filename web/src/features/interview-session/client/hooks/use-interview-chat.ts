@@ -8,6 +8,7 @@ import {
   interviewChatResponseSchema,
 } from "@/features/interview-session/shared/schemas";
 import { validateQuestionId } from "@/features/interview-session/shared/utils/validate-question-id";
+import { withBasePath } from "@/lib/base-path";
 import {
   buildMessagesForApi,
   type ConversationMessage,
@@ -56,7 +57,7 @@ export function useInterviewChat({
 
   // useObjectフックを使用（streamObjectの結果を受け取る）
   const { object, submit, isLoading, error } = useObject({
-    api: "/api/interview/chat",
+    api: withBasePath("/api/interview/chat"),
     schema: interviewChatResponseSchema,
     onFinish: ({ object: finishedObject, error: finishedError }) => {
       if (finishedError) {

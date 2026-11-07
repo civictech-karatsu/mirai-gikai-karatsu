@@ -1,9 +1,10 @@
+import { withBasePath } from "@/lib/base-path";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Lexend_Giga, Noto_Sans_JP } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
-import { siteConfig } from "@/config/site.config";
 import type { ReactNode } from "react";
+import { siteConfig } from "@/config/site.config";
 import { env } from "@/lib/env";
 
 const notoSansJP = Noto_Sans_JP({
@@ -33,11 +34,11 @@ export const metadata: Metadata = {
   keywords: [...siteConfig.keywords],
   icons: {
     icon: isDev
-      ? "/icons/pwa/icon_dev_192_v3.png"
-      : "/icons/pwa/icon_android_192.png",
-    apple: "/icons/pwa/icon_ios.png",
+      ? withBasePath("/icons/pwa/icon_dev_192_v3.png")
+      : withBasePath("/icons/pwa/icon_android_192.png"),
+    apple: withBasePath("/icons/pwa/icon_ios.png"),
   },
-  manifest: "/manifest.json",
+  manifest: withBasePath("/manifest.json"),
   openGraph: {
     title: siteConfig.siteName,
     description: siteConfig.siteDescription,

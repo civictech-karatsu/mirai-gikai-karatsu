@@ -1,3 +1,5 @@
+import { withBasePath } from "@/lib/base-path";
+
 interface CompleteInterviewParams {
   sessionId: string;
   isPublic: boolean;
@@ -15,7 +17,7 @@ interface CompleteInterviewResult {
 export async function callCompleteApi(
   params: CompleteInterviewParams
 ): Promise<CompleteInterviewResult> {
-  const res = await fetch("/api/interview/complete", {
+  const res = await fetch(withBasePath("/api/interview/complete"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(params),

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { getInterviewChatLink } from "@/features/interview-config/shared/utils/interview-links";
+import { withBasePath } from "@/lib/base-path";
 
 interface NewInterviewButtonProps {
   billId: string;
@@ -37,7 +38,7 @@ export function NewInterviewButton({
         <Loader2 className="size-5 animate-spin" />
       ) : (
         <Image
-          src="/icons/messages-square-icon.svg"
+          src={withBasePath("/icons/messages-square-icon.svg")}
           alt=""
           width={24}
           height={24}

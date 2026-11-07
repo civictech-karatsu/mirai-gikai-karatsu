@@ -1,6 +1,7 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
@@ -11,6 +12,7 @@ import {
   useState,
 } from "react";
 import type { BillWithContent } from "@/features/bills/shared/types";
+import { withBasePath } from "@/lib/base-path";
 import { ChatWindow } from "./chat-window";
 
 // アニメーション定数
@@ -48,7 +50,9 @@ export const ChatButton = forwardRef<ChatButtonRef, ChatButtonProps>(
     const pathname = usePathname();
 
     // Chat state をここで管理することで、モーダルが閉じても状態が保持される
-    const chatState = useChat();
+    const chatState = useChat({
+      transport: new DefaultChatTransport({ api: withBasePath("/api/chat") }),
+    });
 
     // pathname が変わるたびに新しいセッションIDを発行
     // ページ遷移時にチャットセッションをリセット
@@ -152,7 +156,7 @@ export const ChatButton = forwardRef<ChatButtonRef, ChatButtonProps>(
               {!isCompact && (
                 <div className="relative w-10 h-10 rounded-[20px] bg-mirai-gradient flex items-center justify-center flex-shrink-0">
                   <Image
-                    src="/icons/chat-button-icon.svg"
+                    src={withBasePath("/icons/chat-button-icon.svg")}
                     alt="チャット"
                     width={40}
                     height={40}

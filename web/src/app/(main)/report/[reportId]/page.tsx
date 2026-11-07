@@ -34,10 +34,7 @@ export async function generateMetadata({
   const ogTitle =
     data.summary || `${stanceText} - ${billName} インタビューレポート`;
   const ogDescription = `${billName}に対するインタビューレポート`;
-  const shareImageUrl = new URL(
-    `/api/og/report?id=${reportId}`,
-    env.webUrl
-  ).toString();
+  const shareImageUrl = `${env.webUrl}/api/og/report?id=${reportId}`;
 
   return {
     title: ogTitle,

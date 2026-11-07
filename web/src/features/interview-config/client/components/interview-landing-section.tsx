@@ -1,9 +1,10 @@
 import { ArrowRight, Check } from "lucide-react";
-import Image from "next/image";
 import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 import { routes } from "@/lib/routes";
 
 interface InterviewLandingSectionProps {
@@ -67,7 +68,7 @@ function _InterviewIllustration() {
   return (
     <div className="absolute right-[-16px] sm:right-6 bottom-[-32px] w-[113.6px] h-[177px] pointer-events-none">
       <Image
-        src="/illustrations/interview-illustration.png"
+        src={withBasePath("/illustrations/interview-illustration.png")}
         alt=""
         width={114}
         height={177}

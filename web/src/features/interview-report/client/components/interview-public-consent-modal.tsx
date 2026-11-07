@@ -4,13 +4,14 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/config/site.config";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 
 interface InterviewPublicConsentModalProps {
   open: boolean;
@@ -23,7 +24,7 @@ function CheckListItem({ children }: { children: ReactNode }) {
   return (
     <div className="flex items-start gap-3">
       <Image
-        src="/icons/check-circle.svg"
+        src={withBasePath("/icons/check-circle.svg")}
         alt=""
         width={20}
         height={20}

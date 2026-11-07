@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 import { stanceLabels, stanceTextColors } from "../constants";
 
@@ -14,7 +15,7 @@ export function StanceDisplay({ stance, size = "md" }: StanceDisplayProps) {
   return (
     <div className="flex flex-col items-center gap-2.5">
       <Image
-        src={`/icons/stance-${stance}.png`}
+        src={withBasePath(`/icons/stance-${stance}.png`)}
         alt={stanceLabels[stance] || stance}
         width={iconSize}
         height={iconSize}

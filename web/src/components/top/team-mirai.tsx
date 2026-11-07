@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 import { SOCIAL_LINKS } from "@/lib/social-links";
 import { LinkButton } from "./link-button";
 
@@ -23,7 +24,7 @@ export function TeamMirai() {
         <div className="flex flex-col gap-4">
           <h2>
             <Image
-              src="/icons/team-mirai-typography.svg"
+              src={withBasePath("/icons/team-mirai-typography.svg")}
               alt="Team Mirai"
               width={263}
               height={39}
@@ -50,7 +51,7 @@ export function TeamMirai() {
             <LinkButton
               href="https://team-mir.ai/"
               icon={{
-                src: "/icons/info-icon.svg",
+                src: withBasePath("/icons/info-icon.svg"),
                 alt: "",
                 width: 23,
                 height: 22,
@@ -62,7 +63,7 @@ export function TeamMirai() {
             <LinkButton
               href="https://team-mir.ai/#donation"
               icon={{
-                src: "/icons/heart-icon.svg",
+                src: withBasePath("/icons/heart-icon.svg"),
                 alt: "",
                 width: 18,
                 height: 17,
