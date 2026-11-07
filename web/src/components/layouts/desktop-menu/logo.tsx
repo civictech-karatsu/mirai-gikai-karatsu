@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 import { routes } from "@/lib/routes";
 
 /**
@@ -15,7 +16,7 @@ export function DesktopMenuLogo() {
       {/* ロゴ */}
       <div className="relative w-[116px] h-[98.38px]">
         <Image
-          src="/img/logo.svg"
+          src={withBasePath("/img/logo.svg")}
           alt={`${siteConfig.siteName}ロゴ`}
           fill
           className="object-contain"

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { EXTERNAL_LINKS } from "@/config/external-links";
+import { withBasePath } from "@/lib/base-path";
 
 export function ReportProblemButton() {
   return (
@@ -10,7 +11,7 @@ export function ReportProblemButton() {
       className="flex items-center justify-center gap-1.5 py-2 text-base font-bold"
     >
       <Image
-        src="/icons/report-error.svg"
+        src={withBasePath("/icons/report-error.svg")}
         alt="報告アイコン"
         width={20}
         height={20}

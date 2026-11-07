@@ -1,7 +1,7 @@
 "use client";
 
-import type { MouseEvent, KeyboardEvent } from "react";
 import Image from "next/image";
+import type { KeyboardEvent, MouseEvent } from "react";
 import { Button } from "@/components/ui/button";
 import {
   shareNative,
@@ -9,6 +9,7 @@ import {
   shareOnLine,
   shareOnTwitter,
 } from "@/features/bills/client/utils/share-handlers";
+import { withBasePath } from "@/lib/base-path";
 import { OgpPreviewCard } from "./ogp-preview-card";
 
 interface ReportShareModalProps {
@@ -39,22 +40,22 @@ export function ReportShareModal({
   const shareButtons = [
     {
       name: "X (Twitter)",
-      iconPath: "/icons/sns/icon_x.png",
+      iconPath: withBasePath("/icons/sns/icon_x.png"),
       onClick: () => shareOnTwitter(shareMessage, shareUrl),
     },
     {
       name: "LINE",
-      iconPath: "/icons/sns/icon_line.png",
+      iconPath: withBasePath("/icons/sns/icon_line.png"),
       onClick: () => shareOnLine(shareMessage, shareUrl),
     },
     {
       name: "Facebook",
-      iconPath: "/icons/sns/icon_facebook.png",
+      iconPath: withBasePath("/icons/sns/icon_facebook.png"),
       onClick: () => shareOnFacebook(shareUrl),
     },
     {
       name: "共有",
-      iconPath: "/icons/share-general.png",
+      iconPath: withBasePath("/icons/share-general.png"),
       onClick: () => shareNative(shareMessage, shareUrl),
     },
   ];

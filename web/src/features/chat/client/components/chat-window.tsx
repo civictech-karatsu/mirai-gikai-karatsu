@@ -19,12 +19,14 @@ import {
   type PromptInputMessage,
   PromptInputTextarea,
 } from "@/components/ai-elements/prompt-input";
-import type { BillWithContent } from "@/features/bills/shared/types";
 import { siteConfig } from "@/config/site.config";
+import type { BillWithContent } from "@/features/bills/shared/types";
 import { useIsDesktop } from "@/hooks/use-is-desktop";
 import { useViewportHeight } from "@/hooks/use-viewport-height";
+import { withBasePath } from "@/lib/base-path";
 import { SystemMessage } from "./system-message";
 import { UserMessage } from "./user-message";
+
 interface ChatWindowProps {
   billContext?: BillWithContent;
   hasInterviewConfig?: boolean;
@@ -294,7 +296,7 @@ export function ChatWindow({
               className="flex-shrink-0 w-10 h-10 disabled:opacity-50"
             >
               <Image
-                src="/icons/send-button-icon.svg"
+                src={withBasePath("/icons/send-button-icon.svg")}
                 alt="送信"
                 width={40}
                 height={40}

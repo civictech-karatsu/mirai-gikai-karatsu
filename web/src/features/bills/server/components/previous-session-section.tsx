@@ -1,9 +1,10 @@
 import { ChevronRight } from "lucide-react";
-import Image from "next/image";
 import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
+import { withBasePath } from "@/lib/base-path";
 import { routes } from "@/lib/routes";
 import { CompactBillCard } from "../../client/components/bill-list/compact-bill-card";
 import type { BillWithContent } from "../../shared/types";
@@ -40,7 +41,7 @@ export function PreviousSessionSection({
       <div className="flex flex-col gap-1">
         <h2>
           <Image
-            src="/icons/archive-typography.svg"
+            src={withBasePath("/icons/archive-typography.svg")}
             alt="Archive"
             width={156}
             height={36}

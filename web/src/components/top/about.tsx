@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 import { LinkButton } from "./link-button";
 
 export function About() {
@@ -10,7 +11,7 @@ export function About() {
         <div className="flex flex-col gap-4">
           <h2>
             <Image
-              src="/icons/about-typography.svg"
+              src={withBasePath("/icons/about-typography.svg")}
               alt="About"
               width={143}
               height={36}
@@ -41,7 +42,7 @@ export function About() {
             <LinkButton
               href={siteConfig.externalLinks.aboutNote}
               icon={{
-                src: "/icons/note-icon.png",
+                src: withBasePath("/icons/note-icon.png"),
                 alt: "note",
                 width: 25,
                 height: 25,
@@ -63,7 +64,7 @@ export function About() {
                   <LinkButton
                     href="https://team-mir.ai/"
                     icon={{
-                      src: "/img/logo.svg",
+                      src: withBasePath("/img/logo.svg"),
                       alt: "",
                       width: 23,
                       height: 22,
@@ -75,7 +76,7 @@ export function About() {
                   <LinkButton
                     href="https://gikai.team-mir.ai/"
                     icon={{
-                      src: "/icons/interview-icon-3.svg",
+                      src: withBasePath("/icons/interview-icon-3.svg"),
                       alt: "",
                       width: 18,
                       height: 17,

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { getInterviewLPLink } from "@/features/interview-config/shared/utils/interview-links";
+import { withBasePath } from "@/lib/base-path";
 import { routes } from "@/lib/routes";
 import { formatDateWithDots } from "@/lib/utils/date";
 import { BillDetailShareButton } from "../../../client/components/bill-detail/bill-detail-share-button";
@@ -98,7 +99,7 @@ export async function BillDetailHeader({
             >
               <Link href={getInterviewLPLink(bill.id) as Route}>
                 <Image
-                  src="/icons/interview-cooperation.svg"
+                  src={withBasePath("/icons/interview-cooperation.svg")}
                   alt=""
                   width={23}
                   height={23}

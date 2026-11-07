@@ -1,10 +1,11 @@
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
+import { siteConfig } from "@/config/site.config";
 import type {
   BillWithContent,
   ComingSoonBill,
 } from "@/features/bills/shared/types";
-import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 import type { CouncilSession } from "../../shared/types";
 import { BillListWithStatusFilter } from "./bill-list-with-status-filter";
 
@@ -29,7 +30,7 @@ export function CouncilSessionBillList({
       <div className="flex flex-col gap-1">
         <h1>
           <Image
-            src="/icons/archive-typography.svg"
+            src={withBasePath("/icons/archive-typography.svg")}
             alt="Archive"
             width={156}
             height={36}

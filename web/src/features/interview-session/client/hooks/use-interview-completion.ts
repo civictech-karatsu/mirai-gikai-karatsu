@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getInterviewReportCompleteLink } from "@/features/interview-config/shared/utils/interview-links";
+import { withBasePath } from "@/lib/base-path";
 import { callCompleteApi } from "../utils/interview-api-client";
 
 interface UseInterviewCompletionProps {
@@ -27,7 +28,9 @@ export function useInterviewCompletion({
       });
       const reportId = result.report?.id;
       if (reportId) {
-        window.location.href = getInterviewReportCompleteLink(reportId);
+        window.location.href = withBasePath(
+          getInterviewReportCompleteLink(reportId)
+        );
       }
       // 画面遷移するまで isCompleting を true のままにする
     } catch (err) {

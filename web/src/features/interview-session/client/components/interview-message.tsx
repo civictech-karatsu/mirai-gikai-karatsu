@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { SystemMessage } from "@/features/chat/client/components/system-message";
 import { UserMessage } from "@/features/chat/client/components/user-message";
 import { InterviewSummary } from "@/features/interview-session/client/components/interview-summary";
+import { withBasePath } from "@/lib/base-path";
 import { rehypeOpenLinksInNewTab } from "@/lib/markdown/rehype-open-links-in-new-tab";
 import type { InterviewReportViewData } from "../../shared/schemas";
 
@@ -38,7 +39,7 @@ export function InterviewMessage({
     <div className="flex flex-col gap-1">
       <div className="flex-shrink-0">
         <Image
-          src="/icons/ai-chat.svg"
+          src={withBasePath("/icons/ai-chat.svg")}
           alt="AI"
           width={36}
           height={36}

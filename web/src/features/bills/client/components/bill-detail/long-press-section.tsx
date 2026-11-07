@@ -1,6 +1,7 @@
 import { MessageCircleQuestion } from "lucide-react";
 import Image from "next/image";
 import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 import { ManualRuby } from "@/lib/rubyful/manual-ruby";
 
 export function LongPressSection() {
@@ -43,7 +44,7 @@ export function LongPressSection() {
         {/* 右側：イラスト */}
         <div className="absolute bottom-[-54px] right-3 flex-shrink-0">
           <Image
-            src="/illustrations/inspiration-simple-green.svg"
+            src={withBasePath("/illustrations/inspiration-simple-green.svg")}
             alt="電球のイラスト"
             width={122}
             height={157}

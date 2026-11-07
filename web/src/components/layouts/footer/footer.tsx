@@ -1,10 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { siteConfig } from "@/config/site.config";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/config/site.config";
+import { withBasePath } from "@/lib/base-path";
 import { isInterviewPage } from "@/lib/page-layout-utils";
 import { routes } from "@/lib/routes";
 import { policyLinks, primaryLinks } from "./footer.config";
@@ -37,7 +38,7 @@ function FooterLogoSection() {
         aria-label={`${siteConfig.siteName} トップページ`}
       >
         <Image
-          src="/img/logo.svg"
+          src={withBasePath("/img/logo.svg")}
           alt={siteConfig.siteName}
           width={150}
           height={128}

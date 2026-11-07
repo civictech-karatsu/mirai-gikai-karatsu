@@ -2,20 +2,20 @@
   "name": "みらい議会＠唐津市",
   "short_name": "みらい議会＠唐津",
   "description": "唐津市議会で今どんな議案が検討されているか、わかりやすく伝えるプラットフォーム",
-  "start_url": "/",
+  "start_url": "/mirai-gikai/",
   "display": "standalone",
   "background_color": "#f6f2e9",
   "theme_color": "#0f7b8a",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icons/pwa/icon_android_192.png",
+      "src": "/mirai-gikai/icons/pwa/icon_android_192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icons/pwa/icon_android_512.png",
+      "src": "/mirai-gikai/icons/pwa/icon_android_512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

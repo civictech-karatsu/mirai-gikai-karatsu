@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
+import { withBasePath } from "@/lib/base-path";
 
 interface LinkButtonProps {
   href: string;
@@ -38,7 +39,7 @@ export function LinkButton({
         />
         <span className="text-[15px] font-bold">{children}</span>
         <Image
-          src="/icons/arrow-right.svg"
+          src={withBasePath("/icons/arrow-right.svg")}
           alt=""
           width={16}
           height={15}

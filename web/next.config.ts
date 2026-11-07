@@ -2,7 +2,24 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 
+// civictech-karatsu.org/mirai-gikai の下で配信する（ルーター Worker がパスをそのまま転送する）
+const basePath = "/mirai-gikai";
+
 const nextConfig: NextConfig = {
+  basePath,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: basePath,
+        basePath: false,
+        permanent: false,
+      },
+    ];
+  },
   experimental: {
     serverSourceMaps: true,
   },

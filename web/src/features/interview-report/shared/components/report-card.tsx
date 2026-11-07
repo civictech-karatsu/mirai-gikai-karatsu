@@ -2,6 +2,7 @@ import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getPublicReportLink } from "@/features/interview-config/shared/utils/interview-links";
+import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 import {
   type InterviewReportRole,
@@ -73,7 +74,7 @@ export function ReportCard({
       <div className="flex items-start gap-3">
         {report.stance && (
           <Image
-            src={`/icons/stance-${report.stance}.png`}
+            src={withBasePath(`/icons/stance-${report.stance}.png`)}
             alt={stanceLabel || ""}
             width={34}
             height={34}

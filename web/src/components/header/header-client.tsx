@@ -3,12 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/config/site.config";
 import { DifficultySelector } from "@/features/bill-difficulty/client/components/difficulty-selector";
 import type { DifficultyLevelEnum } from "@/features/bill-difficulty/shared/types";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
 import { InterviewHeaderActions } from "@/features/interview-session/client/components/interview-header-actions";
+import { withBasePath } from "@/lib/base-path";
 import { isInterviewPage, isMainPage } from "@/lib/page-layout-utils";
-import { siteConfig } from "@/config/site.config";
 import { routes } from "@/lib/routes";
 import { HamburgerMenu } from "./hamburger-menu";
 
@@ -35,7 +36,7 @@ export function HeaderClient({ difficultyLevel, sessions }: HeaderClientProps) {
             >
               {siteConfig.features.showTeamMiraiSection && (
                 <Image
-                  src="/img/logo.svg"
+                  src={withBasePath("/img/logo.svg")}
                   alt={siteConfig.siteName}
                   width={42}
                   height={36}

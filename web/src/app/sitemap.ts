@@ -4,9 +4,8 @@ import { env } from "@/lib/env";
 import { routes } from "@/lib/routes";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : env.webUrl;
+  // webUrl は basePath（/mirai-gikai）込みの公開URL
+  const baseUrl = env.webUrl;
 
   const bills = await getBills();
 
